@@ -123,7 +123,7 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <section
         id="home"
-        className="relative min-h-screen flex items-center overflow-hidden"
+        className="relative min-h-screen flex flex-col overflow-hidden"
         style={{ backgroundColor: BLUE }}
       >
         {/* Background image with overlay */}
@@ -158,7 +158,7 @@ export default function Home() {
           }}
         />
 
-        <div className="container relative z-10 pt-28 md:pt-32 pb-48 md:pb-40">
+        <div className="container relative z-10 pt-28 md:pt-32 pb-16 md:pb-24 flex-1 flex items-center">
           <div ref={heroRef.ref} className="max-w-3xl">
             {/* Eyebrow label */}
             <div
@@ -249,7 +249,7 @@ export default function Home() {
 
         {/* Stats bar */}
         <div
-          className="absolute bottom-0 left-0 right-0"
+          className="relative z-10 mt-auto"
           style={{ borderTop: `1px solid ${YELLOW_RGBA_BORDER}`, background: "rgba(13,14,133,0.88)", backdropFilter: "blur(8px)" }}
         >
           <div className="container">
@@ -273,7 +273,7 @@ export default function Home() {
         {/* Scroll cue */}
         <button
           onClick={() => scrollToSection("services")}
-          className="absolute bottom-28 right-8 hidden lg:flex flex-col items-center gap-2 opacity-40 hover:opacity-70 transition-opacity"
+          className="absolute bottom-6 right-8 hidden lg:flex flex-col items-center gap-2 opacity-40 hover:opacity-70 transition-opacity"
           style={{ color: OFFWHITE }}
         >
           <span style={{ fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", fontFamily: "'DM Mono', monospace", writingMode: "vertical-rl" }}>Scroll</span>
