@@ -1,7 +1,7 @@
 /* ============================================================
    SERVICES PAGE — Bridgepoint Business Collective
    Design: Executive Gravitas | Navy #0d0e85 | Yellow #dcb92b
-   Source: Bridgepoint_Webflow_Copy_Blocks.md (A2P Compliant)
+   Clean card layout — no overlay system, reliable on all browsers
    ============================================================ */
 
 import Navbar from "@/components/Navbar";
@@ -14,8 +14,9 @@ const BLUE    = "#0d0e85";
 const YELLOW  = "#dcb92b";
 const LIGHT   = "#F4F6F9";
 const WHITE   = "#ffffff";
+const DARK    = "#07082a";
 
-// ─── SERVICES DATA (A2P Compliant) ────────────────────────────
+// ─── SERVICES DATA ────────────────────────────────────────────
 const SERVICES = [
   {
     num: "01",
@@ -31,7 +32,6 @@ const SERVICES = [
       "Business credit profile assessment",
       "Readiness assessment & action plan",
     ],
-    cta: "Get Started",
     highlight: "The businesses that scale are the ones that prepared before they needed to.",
   },
   {
@@ -48,7 +48,6 @@ const SERVICES = [
       "Trade line establishment & management",
       "Financial documentation review",
     ],
-    cta: "Get Started",
     highlight: "Financial infrastructure is not a back-office function — it is a growth engine.",
   },
   {
@@ -65,7 +64,6 @@ const SERVICES = [
       "Standard operating procedure development",
       "Technology stack assessment & integration",
     ],
-    cta: "Get Started",
     highlight: "The right systems do not just save time — they create the capacity to grow.",
   },
 ];
@@ -91,6 +89,50 @@ function useInView(threshold = 0.15) {
   return { ref, inView };
 }
 
+// ─── CTA Button ───────────────────────────────────────────────
+function CtaButton({ label = "Get Started →", dark = false }: { label?: string; dark?: boolean }) {
+  const [hovered, setHovered] = useState(false);
+  const bg = dark
+    ? (hovered ? YELLOW : WHITE)
+    : (hovered ? YELLOW : BLUE);
+  const color = dark
+    ? (hovered ? BLUE : BLUE)
+    : (hovered ? BLUE : WHITE);
+  const border = dark
+    ? (hovered ? YELLOW : WHITE)
+    : (hovered ? YELLOW : BLUE);
+
+  return (
+    <a
+      href="/#contact"
+      onClick={(e) => { e.preventDefault(); window.location.href = "/#contact"; }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        width: "fit-content",
+        fontFamily: "'DM Sans', sans-serif",
+        fontSize: "11px",
+        fontWeight: 700,
+        letterSpacing: "0.14em",
+        textTransform: "uppercase",
+        padding: "13px 32px",
+        background: bg,
+        color: color,
+        textDecoration: "none",
+        borderRadius: "2px",
+        border: `2px solid ${border}`,
+        transition: "background 0.2s, color 0.2s, border-color 0.2s",
+        cursor: "pointer",
+        whiteSpace: "nowrap",
+      }}
+    >
+      {label}
+    </a>
+  );
+}
+
 export default function Services() {
   const isMobile = useIsMobile();
   const heroRef    = useInView(0.1);
@@ -114,13 +156,11 @@ export default function Services() {
           overflow: "hidden",
         }}
       >
-        {/* Dot grid texture */}
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `radial-gradient(circle, rgba(220,185,43,0.08) 1px, transparent 1px)`,
           backgroundSize: "28px 28px",
         }} />
-        {/* Gold rule accent */}
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: YELLOW }} />
 
         <div
@@ -129,51 +169,34 @@ export default function Services() {
         >
           <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "1.5rem" }}>
             <div style={{ width: "48px", height: "1px", background: YELLOW }} />
-            <span style={{
-              fontFamily: "'DM Mono', monospace", fontSize: "0.7rem",
-              letterSpacing: "0.25em", textTransform: "uppercase", color: YELLOW,
-            }}>
+            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: YELLOW }}>
               What We Do
             </span>
           </div>
           <h1
             className={`transition-all duration-700 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: "clamp(2.8rem, 5vw, 4.5rem)",
-              fontWeight: 800,
-              color: WHITE,
-              lineHeight: 1.1,
-              maxWidth: "700px",
-              marginBottom: "1.5rem",
-            }}
+            style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2.8rem, 5vw, 4.5rem)", fontWeight: 800, color: WHITE, lineHeight: 1.1, maxWidth: "700px", marginBottom: "1.5rem" }}
           >
             Business Systems &{" "}
             <span style={{ color: YELLOW, fontStyle: "italic" }}>Growth Strategy</span>
           </h1>
           <p
             className={`transition-all duration-700 delay-100 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "clamp(1rem, 1.5vw, 1.2rem)",
-              fontWeight: 400,
-              color: "rgba(255,255,255,0.82)",
-              maxWidth: "600px",
-              lineHeight: 1.75,
-            }}
+            style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(1rem, 1.5vw, 1.2rem)", fontWeight: 400, color: "rgba(255,255,255,0.82)", maxWidth: "600px", lineHeight: 1.75 }}
           >
             Bridgepoint Business Collective supports new and established small and midsize businesses across the United States through three core advisory services — each designed to build, grow, and scale your business with clarity and confidence.
           </p>
         </div>
       </section>
 
-      {/* ── Three Service Pillars ─────────────────────────────── */}
+      {/* ── Three Service Cards ───────────────────────────────── */}
       <section style={{ background: LIGHT, padding: isMobile ? "56px 0" : "96px 0" }}>
         <div
           ref={cardsRef.ref}
-          style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 2rem" }}
+          style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 1.25rem" : "0 2rem" }}
         >
-          <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+          {/* Section header */}
+          <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", marginBottom: "1.25rem" }}>
               <div style={{ width: "40px", height: "1px", background: YELLOW }} />
               <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: YELLOW }}>
@@ -183,57 +206,47 @@ export default function Services() {
             </div>
             <h2
               className={`transition-all duration-700 ${cardsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(2rem, 3vw, 3rem)",
-                fontWeight: 700,
-                color: BLUE,
-                lineHeight: 1.2,
-                marginBottom: "1rem",
-              }}
+              style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem, 3vw, 3rem)", fontWeight: 700, color: BLUE, lineHeight: 1.2, marginBottom: "1rem" }}
             >
               Three Pillars. One Clear Path Forward.
             </h2>
-            <p style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "1.05rem",
-              fontWeight: 400,
-              color: "#4B5563",
-              maxWidth: "580px",
-              margin: "0 auto",
-              lineHeight: 1.75,
-            }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.05rem", fontWeight: 400, color: "#4B5563", maxWidth: "580px", margin: "0 auto", lineHeight: 1.75 }}>
               Every service we offer is built around the insights that separate businesses that scale from those that stall.
             </p>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
+          {/* Cards */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
             {SERVICES.map((service, i) => (
               <div
                 key={service.num}
-                className={`bp-card transition-all duration-700 ${cardsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                className={`transition-all duration-700 ${cardsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 style={{
                   transitionDelay: `${i * 120}ms`,
                   background: WHITE,
-                  border: `1px solid rgba(13,14,133,0.08)`,
-                  borderLeft: `4px solid ${YELLOW}`,
+                  border: `1px solid rgba(13,14,133,0.1)`,
+                  borderLeft: `5px solid ${YELLOW}`,
                   borderRadius: "8px",
+                  boxShadow: "0 2px 20px rgba(13,14,133,0.07)",
+                  overflow: "visible",
                 }}
               >
-                {/* ── Default card body ── */}
-                <div className="bp-card-body" style={{
-                  padding: "2.5rem",
-                  display: "grid",
-                  gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-                  gap: isMobile ? "1.5rem" : "2.5rem",
-                  alignItems: "start",
-                }}>
-                  {/* Left: Title + Description + Highlight */}
+                <div
+                  style={{
+                    padding: isMobile ? "2rem 1.5rem" : "2.5rem 3rem",
+                    display: "grid",
+                    gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+                    gap: isMobile ? "2rem" : "3rem",
+                    alignItems: "start",
+                  }}
+                >
+                  {/* ── Left column: title, description, quote ── */}
                   <div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "1rem" }}>
+                    {/* Service number badge */}
+                    <div style={{ marginBottom: "1rem" }}>
                       <span style={{
                         fontFamily: "'DM Mono', monospace",
-                        fontSize: "0.7rem",
+                        fontSize: "0.68rem",
                         fontWeight: 700,
                         letterSpacing: "0.15em",
                         color: YELLOW,
@@ -244,9 +257,11 @@ export default function Services() {
                         {service.num}
                       </span>
                     </div>
+
+                    {/* Title */}
                     <h3 style={{
                       fontFamily: "'Playfair Display', serif",
-                      fontSize: "clamp(1.5rem, 2vw, 1.9rem)",
+                      fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
                       fontWeight: 700,
                       color: BLUE,
                       marginBottom: "0.5rem",
@@ -254,57 +269,59 @@ export default function Services() {
                     }}>
                       {service.title}
                     </h3>
+
+                    {/* Subtitle */}
                     <p style={{
                       fontFamily: "'DM Mono', monospace",
-                      fontSize: "0.72rem",
-                      letterSpacing: "0.12em",
+                      fontSize: "0.68rem",
+                      letterSpacing: "0.14em",
                       textTransform: "uppercase",
                       color: YELLOW,
                       marginBottom: "1.25rem",
                     }}>
                       {service.subtitle}
                     </p>
+
+                    {/* Description */}
                     <p style={{
                       fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "1.05rem",
-                      fontWeight: 600,
+                      fontSize: "1rem",
+                      fontWeight: 400,
                       color: "#374151",
                       lineHeight: 1.8,
                       marginBottom: "1.5rem",
                     }}>
                       {service.description}
                     </p>
-                    {/* Insight callout */}
-                    <div style={{
+
+                    {/* Insight quote */}
+                    <blockquote style={{
                       borderLeft: `3px solid ${YELLOW}`,
                       paddingLeft: "1rem",
-                      marginTop: "1rem",
+                      margin: 0,
+                      fontFamily: "'Playfair Display', serif",
+                      fontSize: "0.95rem",
+                      fontStyle: "italic",
+                      color: BLUE,
+                      lineHeight: 1.65,
                     }}>
-                      <p style={{
-                        fontFamily: "'Playfair Display', serif",
-                        fontSize: "0.95rem",
-                        fontStyle: "italic",
-                        color: BLUE,
-                        lineHeight: 1.6,
-                        margin: 0,
-                      }}>
-                        "{service.highlight}"
-                      </p>
-                    </div>
+                      "{service.highlight}"
+                    </blockquote>
                   </div>
 
-                  {/* Right: Details list + CTA */}
+                  {/* ── Right column: what's included + CTA ── */}
                   <div>
                     <p style={{
                       fontFamily: "'DM Mono', monospace",
-                      fontSize: "0.68rem",
-                      letterSpacing: "0.18em",
+                      fontSize: "0.65rem",
+                      letterSpacing: "0.2em",
                       textTransform: "uppercase",
-                      color: "rgba(13,14,133,0.45)",
+                      color: "rgba(13,14,133,0.4)",
                       marginBottom: "1rem",
                     }}>
                       What's Included
                     </p>
+
                     <ul style={{ listStyle: "none", padding: 0, margin: "0 0 2rem 0", display: "flex", flexDirection: "column", gap: "10px" }}>
                       {service.details.map((item) => (
                         <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
@@ -314,12 +331,12 @@ export default function Services() {
                             height: "6px",
                             borderRadius: "50%",
                             background: YELLOW,
-                            marginTop: "7px",
+                            marginTop: "8px",
                           }} />
                           <span style={{
                             fontFamily: "'DM Sans', sans-serif",
                             fontSize: "0.95rem",
-                            fontWeight: 600,
+                            fontWeight: 500,
                             color: "#1F2937",
                             lineHeight: 1.6,
                           }}>
@@ -328,102 +345,9 @@ export default function Services() {
                         </li>
                       ))}
                     </ul>
-                    <a
-                      href="/#contact"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        window.location.href = "/#contact";
-                      }}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        width: "fit-content",
-                        fontFamily: "'DM Sans', sans-serif",
-                        fontSize: "11px",
-                        fontWeight: 700,
-                        letterSpacing: "0.14em",
-                        textTransform: "uppercase",
-                        padding: "12px 28px",
-                        background: BLUE,
-                        color: WHITE,
-                        textDecoration: "none",
-                        borderRadius: "2px",
-                        transition: "background 0.2s, color 0.2s, border-color 0.2s",
-                        border: `2px solid ${BLUE}`,
-                        cursor: "pointer",
-                        whiteSpace: "nowrap",
-                      }}
-                      onMouseEnter={(e) => {
-                        const el = e.currentTarget as HTMLAnchorElement;
-                        el.style.background = YELLOW;
-                        el.style.color = BLUE;
-                        el.style.borderColor = YELLOW;
-                      }}
-                      onMouseLeave={(e) => {
-                        const el = e.currentTarget as HTMLAnchorElement;
-                        el.style.background = BLUE;
-                        el.style.color = WHITE;
-                        el.style.borderColor = BLUE;
-                      }}
-                    >
-                      {service.cta} &rarr;
-                    </a>
-                  </div>
-                </div>
 
-                {/* ── Navy slide-up overlay ── */}
-                <div className="bp-card-overlay" style={{ borderRadius: "8px", borderLeft: `4px solid ${YELLOW}` }}>
-                  <div className="bp-card-overlay-label">{service.subtitle}</div>
-                  <div className="bp-card-overlay-rule" />
-                  <div className="bp-card-overlay-title">{service.title}</div>
-                  <div className="bp-card-overlay-body">{service.description}</div>
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                    {service.details.map((item) => (
-                      <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
-                        <span style={{ color: YELLOW, fontSize: "0.65rem", marginTop: "0.35rem", flexShrink: 0 }}>◆</span>
-                        <span style={{ fontSize: "0.92rem", fontWeight: 600, color: "rgba(255,255,255,0.92)", lineHeight: 1.6 }}>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href="/#contact"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      window.location.href = "/#contact";
-                    }}
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      width: "fit-content",
-                      marginTop: "1.5rem",
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "11px",
-                      fontWeight: 700,
-                      letterSpacing: "0.14em",
-                      textTransform: "uppercase",
-                      padding: "10px 24px",
-                      background: YELLOW,
-                      color: BLUE,
-                      textDecoration: "none",
-                      borderRadius: "2px",
-                      border: `2px solid ${YELLOW}`,
-                      transition: "background 0.2s, color 0.2s",
-                      cursor: "pointer",
-                      whiteSpace: "nowrap",
-                    }}
-                    onMouseEnter={(e) => {
-                      const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.background = "transparent";
-                      el.style.color = YELLOW;
-                    }}
-                    onMouseLeave={(e) => {
-                      const el = e.currentTarget as HTMLAnchorElement;
-                      el.style.background = YELLOW;
-                      el.style.color = BLUE;
-                    }}
-                  >
-                    {service.cta} &rarr;
-                  </a>
+                    <CtaButton />
+                  </div>
                 </div>
               </div>
             ))}
@@ -432,7 +356,7 @@ export default function Services() {
       </section>
 
       {/* ── How It Works — Process Steps ─────────────────────── */}
-      <section style={{ background: BLUE, padding: "96px 0", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: BLUE, padding: isMobile ? "56px 0" : "96px 0", position: "relative", overflow: "hidden" }}>
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `radial-gradient(circle, rgba(220,185,43,0.07) 1px, transparent 1px)`,
@@ -440,7 +364,7 @@ export default function Services() {
         }} />
         <div
           ref={processRef.ref}
-          style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 2rem", position: "relative" }}
+          style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 1.25rem" : "0 2rem", position: "relative" }}
         >
           <div style={{ textAlign: "center", marginBottom: "4rem" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", marginBottom: "1.25rem" }}>
@@ -452,75 +376,55 @@ export default function Services() {
             </div>
             <h2
               className={`transition-all duration-700 ${processRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(2rem, 3vw, 3rem)",
-                fontWeight: 700,
-                color: WHITE,
-                lineHeight: 1.2,
-              }}
+              style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem, 3vw, 3rem)", fontWeight: 700, color: WHITE, lineHeight: 1.2 }}
             >
-              Getting Started Is Simple
+              Our Four-Step Advisory Process
             </h2>
           </div>
 
           <div style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+            gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)",
             gap: "1.5rem",
           }}>
             {PROCESS_STEPS.map((step, i) => (
               <div
                 key={step.num}
-                className={`bp-card transition-all duration-700 ${processRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                className={`transition-all duration-700 ${processRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 style={{
                   transitionDelay: `${i * 100}ms`,
-                  background: "rgba(255,255,255,0.05)",
+                  background: "rgba(255,255,255,0.06)",
                   border: "1px solid rgba(220,185,43,0.2)",
-                  borderTop: `3px solid ${YELLOW}`,
                   borderRadius: "6px",
+                  padding: isMobile ? "1.5rem" : "2rem 2.5rem",
+                  display: "flex",
+                  gap: "1.5rem",
+                  alignItems: "flex-start",
                 }}
               >
-                {/* ── Default body ── */}
-                <div className="bp-card-body" style={{ padding: "2rem" }}>
-                  <div style={{
-                    fontFamily: "'DM Mono', monospace",
-                    fontSize: "1.8rem",
-                    fontWeight: 700,
-                    color: "rgba(220,185,43,0.25)",
-                    marginBottom: "1rem",
-                    lineHeight: 1,
-                  }}>
-                    {step.num}
-                  </div>
-                  <h4 style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: "1.2rem",
-                    fontWeight: 700,
-                    color: WHITE,
-                    marginBottom: "0.75rem",
-                    lineHeight: 1.3,
-                  }}>
+                <div style={{
+                  flexShrink: 0,
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "50%",
+                  background: YELLOW,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontFamily: "'DM Mono', monospace",
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  color: BLUE,
+                }}>
+                  {step.num}
+                </div>
+                <div>
+                  <h4 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.15rem", fontWeight: 700, color: WHITE, marginBottom: "0.5rem", lineHeight: 1.3 }}>
                     {step.title}
                   </h4>
-                  <p style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "1rem",
-                    fontWeight: 600,
-                    color: "rgba(255,255,255,0.9)",
-                    lineHeight: 1.75,
-                    margin: 0,
-                  }}>
+                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.7, margin: 0 }}>
                     {step.desc}
                   </p>
-                </div>
-
-                {/* ── Navy slide-up overlay (lighter navy to contrast dark bg) ── */}
-                <div className="bp-card-overlay" style={{ borderRadius: "6px", background: "#1112a0" }}>
-                  <div className="bp-card-overlay-label">Step {step.num}</div>
-                  <div className="bp-card-overlay-rule" />
-                  <div className="bp-card-overlay-title">{step.title}</div>
-                  <div className="bp-card-overlay-body" style={{ marginBottom: 0 }}>{step.desc}</div>
                 </div>
               </div>
             ))}
@@ -528,11 +432,16 @@ export default function Services() {
         </div>
       </section>
 
-      {/* ── CTA Section ──────────────────────────────────────── */}
-      <section style={{ background: LIGHT, padding: isMobile ? "56px 0" : "96px 0" }}>
+      {/* ── CTA Section ───────────────────────────────────────── */}
+      <section style={{ background: DARK, padding: isMobile ? "56px 0" : "96px 0", position: "relative", overflow: "hidden" }}>
+        <div style={{
+          position: "absolute", inset: 0,
+          backgroundImage: `radial-gradient(circle, rgba(220,185,43,0.06) 1px, transparent 1px)`,
+          backgroundSize: "28px 28px",
+        }} />
         <div
           ref={ctaRef.ref}
-          style={{ maxWidth: "700px", margin: "0 auto", padding: "0 2rem", textAlign: "center" }}
+          style={{ maxWidth: "720px", margin: "0 auto", padding: isMobile ? "0 1.25rem" : "0 2rem", position: "relative", textAlign: "center" }}
         >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", marginBottom: "1.25rem" }}>
             <div style={{ width: "40px", height: "1px", background: YELLOW }} />
@@ -543,68 +452,23 @@ export default function Services() {
           </div>
           <h2
             className={`transition-all duration-700 ${ctaRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: "clamp(2rem, 3.5vw, 3rem)",
-              fontWeight: 700,
-              color: BLUE,
-              lineHeight: 1.2,
-              marginBottom: "1.25rem",
-            }}
+            style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem, 3vw, 2.8rem)", fontWeight: 700, color: WHITE, lineHeight: 1.2, marginBottom: "1.5rem" }}
           >
-            Ready to Build Your Clear Path Forward?
+            Your Business Deserves a Clear Path Forward.
           </h2>
-          <p style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontSize: "1.05rem",
-            fontWeight: 400,
-            color: "#4B5563",
-            lineHeight: 1.8,
-            marginBottom: "2.5rem",
-          }}>
-            Every business owner deserves a clear path forward. Bridgepoint was built to be the advisory partner that delivers one. Schedule your readiness assessment today.
-          </p>
-          <a
-            href="/#contact"
-            style={{
-              display: "inline-block",
-              fontFamily: "'Outfit', 'DM Sans', sans-serif",
-              fontSize: "13px",
-              fontWeight: 700,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              padding: "16px 40px",
-              background: BLUE,
-              color: WHITE,
-              textDecoration: "none",
-              borderRadius: "2px",
-              border: `1px solid ${BLUE}`,
-              transition: "background 0.2s, color 0.2s, border-color 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = YELLOW;
-              (e.currentTarget as HTMLAnchorElement).style.color = BLUE;
-              (e.currentTarget as HTMLAnchorElement).style.borderColor = YELLOW;
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.background = BLUE;
-              (e.currentTarget as HTMLAnchorElement).style.color = WHITE;
-              (e.currentTarget as HTMLAnchorElement).style.borderColor = BLUE;
-            }}
+          <p
+            className={`transition-all duration-700 delay-100 ${ctaRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+            style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.05rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.75, marginBottom: "2.5rem" }}
           >
-            Get Started
-          </a>
+            Schedule a complimentary consultation and let us build your strategic roadmap — from financial infrastructure to growth positioning.
+          </p>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <CtaButton label="Schedule a Consultation →" dark={true} />
+          </div>
         </div>
       </section>
 
       <Footer />
-
-      {/* Responsive grid fix for service cards */}
-      <style>{`
-        @media (max-width: 768px) {
-          .service-card-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </div>
   );
 }
