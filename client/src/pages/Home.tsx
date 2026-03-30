@@ -158,7 +158,7 @@ export default function Home() {
           }}
         />
 
-        <div className="container relative z-10 pt-28 md:pt-32 pb-16 md:pb-24">
+        <div className="container relative z-10 pt-28 md:pt-32 pb-48 md:pb-40">
           <div ref={heroRef.ref} className="max-w-3xl">
             {/* Eyebrow label */}
             <div
@@ -211,7 +211,7 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div
-              className={`flex flex-wrap gap-4 transition-all duration-700 delay-300 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+              className={`flex flex-col sm:flex-row flex-wrap gap-4 transition-all duration-700 delay-300 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
             >
               <button
                 onClick={() => scrollToSection("contact")}
@@ -253,11 +253,11 @@ export default function Home() {
           style={{ borderTop: `1px solid ${YELLOW_RGBA_BORDER}`, background: "rgba(13,14,133,0.88)", backdropFilter: "blur(8px)" }}
         >
           <div className="container">
-            <div className="grid grid-cols-2 md:grid-cols-4 divide-x" style={{ borderColor: YELLOW_RGBA_BORDER }}>
+            <div className="grid grid-cols-2 md:grid-cols-4" style={{ borderColor: YELLOW_RGBA_BORDER }}>
               {stats.map((s) => (
-                <div key={s.label} className="py-5 px-6 text-center" style={{ borderColor: YELLOW_RGBA_BORDER }}>
+                <div key={s.label} className="py-4 px-4 md:py-5 md:px-6 text-center" style={{ borderColor: YELLOW_RGBA_BORDER, borderRight: '1px solid rgba(220,185,43,0.25)' }}>
                   <div
-                    style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.75rem", fontWeight: 700, color: YELLOW }}
+                    style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.25rem, 4vw, 1.75rem)", fontWeight: 700, color: YELLOW }}
                   >
                     {s.value}
                   </div>
