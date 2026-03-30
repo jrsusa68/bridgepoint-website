@@ -330,33 +330,43 @@ export default function Services() {
                     </ul>
                     <a
                       href="/#contact"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.location.href = "/#contact";
+                      }}
                       style={{
-                        display: "inline-block",
-                        fontFamily: "'Outfit', 'DM Sans', sans-serif",
-                        fontSize: "12px",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        width: "fit-content",
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontSize: "11px",
                         fontWeight: 700,
-                        letterSpacing: "0.12em",
+                        letterSpacing: "0.14em",
                         textTransform: "uppercase",
                         padding: "12px 28px",
                         background: BLUE,
                         color: WHITE,
                         textDecoration: "none",
                         borderRadius: "2px",
-                        transition: "background 0.2s, color 0.2s",
-                        border: `1px solid ${BLUE}`,
+                        transition: "background 0.2s, color 0.2s, border-color 0.2s",
+                        border: `2px solid ${BLUE}`,
+                        cursor: "pointer",
+                        whiteSpace: "nowrap",
                       }}
                       onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLAnchorElement).style.background = YELLOW;
-                        (e.currentTarget as HTMLAnchorElement).style.color = BLUE;
-                        (e.currentTarget as HTMLAnchorElement).style.borderColor = YELLOW;
+                        const el = e.currentTarget as HTMLAnchorElement;
+                        el.style.background = YELLOW;
+                        el.style.color = BLUE;
+                        el.style.borderColor = YELLOW;
                       }}
                       onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLAnchorElement).style.background = BLUE;
-                        (e.currentTarget as HTMLAnchorElement).style.color = WHITE;
-                        (e.currentTarget as HTMLAnchorElement).style.borderColor = BLUE;
+                        const el = e.currentTarget as HTMLAnchorElement;
+                        el.style.background = BLUE;
+                        el.style.color = WHITE;
+                        el.style.borderColor = BLUE;
                       }}
                     >
-                      {service.cta}
+                      {service.cta} &rarr;
                     </a>
                   </div>
                 </div>
@@ -377,22 +387,42 @@ export default function Services() {
                   </ul>
                   <a
                     href="/#contact"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.location.href = "/#contact";
+                    }}
                     style={{
-                      display: "inline-block",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      width: "fit-content",
                       marginTop: "1.5rem",
-                      fontFamily: "'Outfit', 'DM Sans', sans-serif",
-                      fontSize: "12px",
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: "11px",
                       fontWeight: 700,
-                      letterSpacing: "0.12em",
+                      letterSpacing: "0.14em",
                       textTransform: "uppercase",
                       padding: "10px 24px",
                       background: YELLOW,
                       color: BLUE,
                       textDecoration: "none",
                       borderRadius: "2px",
+                      border: `2px solid ${YELLOW}`,
+                      transition: "background 0.2s, color 0.2s",
+                      cursor: "pointer",
+                      whiteSpace: "nowrap",
+                    }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLAnchorElement;
+                      el.style.background = "transparent";
+                      el.style.color = YELLOW;
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLAnchorElement;
+                      el.style.background = YELLOW;
+                      el.style.color = BLUE;
                     }}
                   >
-                    {service.cta}
+                    {service.cta} &rarr;
                   </a>
                 </div>
               </div>

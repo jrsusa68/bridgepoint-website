@@ -253,15 +253,27 @@ export default function Home() {
           style={{ borderTop: `1px solid ${YELLOW_RGBA_BORDER}`, background: "rgba(13,14,133,0.88)", backdropFilter: "blur(8px)" }}
         >
           <div className="container">
-            <div className="grid grid-cols-2 md:grid-cols-4" style={{ borderColor: YELLOW_RGBA_BORDER }}>
-              {stats.map((s) => (
-                <div key={s.label} className="py-4 px-4 md:py-5 md:px-6 text-center" style={{ borderColor: YELLOW_RGBA_BORDER, borderRight: '1px solid rgba(220,185,43,0.25)' }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                width: "100%",
+              }}
+            >
+              {stats.map((s, i) => (
+                <div
+                  key={s.label}
+                  className="py-4 px-4 md:py-5 md:px-6 text-center"
+                  style={{
+                    borderRight: i < stats.length - 1 ? `1px solid ${YELLOW_RGBA_BORDER}` : "none",
+                  }}
+                >
                   <div
-                    style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.25rem, 4vw, 1.75rem)", fontWeight: 700, color: YELLOW }}
+                    style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.1rem, 3.5vw, 1.75rem)", fontWeight: 700, color: YELLOW }}
                   >
                     {s.value}
                   </div>
-                  <div style={{ fontSize: "0.7rem", color: OFFWHITE_50, letterSpacing: "0.12em", textTransform: "uppercase", fontFamily: "'DM Mono', monospace", marginTop: "2px" }}>
+                  <div style={{ fontSize: "0.65rem", color: OFFWHITE_50, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'DM Mono', monospace", marginTop: "2px", lineHeight: 1.4 }}>
                     {s.label}
                   </div>
                 </div>
