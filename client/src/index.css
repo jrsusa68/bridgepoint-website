@@ -268,3 +268,113 @@
   .nav-link.active { color: #dcb92b; }
   .nav-link.active::after { width: 100%; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE OVERRIDES
+   Applied globally to fix layout on phones and small tablets
+═══════════════════════════════════════════════════════════ */
+
+/* Prevent any element from causing horizontal scroll */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  /* ── Section vertical spacing ── */
+  .py-28 { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+  .py-24 { padding-top: 3.5rem !important; padding-bottom: 3.5rem !important; }
+  .py-16 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+
+  /* ── Hero section ── */
+  .min-h-screen { min-height: 100svh; }
+
+  /* ── Stats bar: 2 cols on mobile ── */
+  .grid.grid-cols-2.md\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* ── Service / process cards: single column ── */
+  .grid.grid-cols-1.lg\:grid-cols-3,
+  .grid.grid-cols-1.md\:grid-cols-2.lg\:grid-cols-4,
+  .grid.grid-cols-1.lg\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── About section two-column layout ── */
+  .grid.grid-cols-1.lg\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem !important;
+  }
+
+  /* ── Card body padding ── */
+  .bp-card-body {
+    padding: 1.5rem !important;
+  }
+
+  /* ── Footer grid ── */
+  .grid.grid-cols-1.md\:grid-cols-3 {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  /* ── Testimonials / FAQ grid ── */
+  .grid.grid-cols-1.md\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── CTA buttons: stack vertically ── */
+  .flex.flex-wrap.gap-4 {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  /* ── Hero headline font size floor ── */
+  h1 {
+    font-size: clamp(2.2rem, 8vw, 3.5rem) !important;
+    line-height: 1.15 !important;
+  }
+
+  /* ── Section headings ── */
+  h2 {
+    font-size: clamp(1.8rem, 6vw, 2.8rem) !important;
+  }
+
+  /* ── Reduce hero top padding on mobile ── */
+  .pt-32 { padding-top: 7rem !important; }
+  .pb-24 { padding-bottom: 6rem !important; }
+
+  /* ── Images in about section ── */
+  .h-80, .lg\:h-96 { height: 14rem !important; }
+
+  /* ── Marquee logos: slightly smaller ── */
+  .marquee-logo { height: 28px !important; }
+
+  /* ── Contact form iframe ── */
+  iframe {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* ── Overflow safety on all sections ── */
+  section {
+    overflow-x: hidden !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* ── Extra small phones ── */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 9vw, 2.8rem) !important;
+  }
+
+  /* ── Stats bar: 2x2 grid ── */
+  .grid.grid-cols-2.md\:grid-cols-4 > * {
+    padding: 0.875rem 0.5rem !important;
+  }
+}

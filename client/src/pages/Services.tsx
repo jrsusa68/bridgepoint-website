@@ -108,8 +108,8 @@ export default function Services() {
       <section
         style={{
           background: `linear-gradient(135deg, ${BLUE} 0%, #0a0c6b 100%)`,
-          paddingTop: "120px",
-          paddingBottom: "72px",
+          paddingTop: isMobile ? "100px" : "120px",
+          paddingBottom: isMobile ? "48px" : "72px",
           position: "relative",
           overflow: "hidden",
         }}
@@ -168,7 +168,7 @@ export default function Services() {
       </section>
 
       {/* ── Three Service Pillars ─────────────────────────────── */}
-      <section style={{ background: LIGHT, padding: "96px 0" }}>
+      <section style={{ background: LIGHT, padding: isMobile ? "56px 0" : "96px 0" }}>
         <div
           ref={cardsRef.ref}
           style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 2rem" }}
@@ -499,7 +499,7 @@ export default function Services() {
       </section>
 
       {/* ── CTA Section ──────────────────────────────────────── */}
-      <section style={{ background: LIGHT, padding: "96px 0" }}>
+      <section style={{ background: LIGHT, padding: isMobile ? "56px 0" : "96px 0" }}>
         <div
           ref={ctaRef.ref}
           style={{ maxWidth: "700px", margin: "0 auto", padding: "0 2rem", textAlign: "center" }}

@@ -158,7 +158,7 @@ export default function Home() {
           }}
         />
 
-        <div className="container relative z-10 pt-32 pb-24">
+        <div className="container relative z-10 pt-28 md:pt-32 pb-16 md:pb-24">
           <div ref={heroRef.ref} className="max-w-3xl">
             {/* Eyebrow label */}
             <div
@@ -183,7 +183,7 @@ export default function Home() {
               className={`mb-6 transition-all duration-700 delay-100 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
               style={{
                 fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(3.2rem, 6vw, 5.5rem)",
+                fontSize: "clamp(2.4rem, 7vw, 5.5rem)",
                 fontWeight: 700,
                 lineHeight: 1.12,
                 color: OFFWHITE,
@@ -289,7 +289,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════
           SERVICES SECTION
       ══════════════════════════════════════════ */}
-      <section id="services" className="py-28" style={{ backgroundColor: "#F4F6F9" }}>
+      <section id="services" className="py-16 md:py-28" style={{ backgroundColor: "#F4F6F9" }}>
         <div className="container">
           {/* Section header */}
           <div ref={servicesRef.ref} className="mb-16">
@@ -404,7 +404,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════
           ABOUT / MISSION SECTION
       ══════════════════════════════════════════ */}
-      <section id="about" className="py-28 relative overflow-hidden" style={{ backgroundColor: BLUE }}>
+      <section id="about" className="py-16 md:py-28 relative overflow-hidden" style={{ backgroundColor: BLUE }}>
         <div className="absolute inset-0 dot-grid" style={{ opacity: 0.3 }} />
         <div className="container relative z-10">
           <div ref={aboutRef.ref} className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -480,7 +480,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════
           PROCESS SECTION
       ══════════════════════════════════════════ */}
-      <section className="py-28" style={{ backgroundColor: "#fff" }}>
+      <section className="py-16 md:py-28" style={{ backgroundColor: "#fff" }}>
         <div className="container">
           <div ref={processRef.ref} className="text-center mb-16">
             <div className={`flex items-center justify-center gap-3 mb-5 transition-all duration-600 ${processRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}>
@@ -547,7 +547,7 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <section
         id="contact"
-        className="relative py-28 overflow-hidden"
+        className="relative py-16 md:py-28 overflow-hidden"
         style={{ backgroundColor: BLUE }}
       >
         <div className="absolute inset-0">
@@ -595,7 +595,7 @@ export default function Home() {
       ══════════════════════════════════════════ */}
       <Footer />
       {false && <footer style={{ backgroundColor: "#08094f", borderTop: `1px solid ${YELLOW_RGBA_BORDER}` }}>
-        <div className="container py-16">
+        <div className="container py-10 md:py-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             {/* Brand */}
             <div>
@@ -706,7 +706,7 @@ function FAQSection() {
     <section
       id="faq"
       style={{ backgroundColor: "#F4F6F9", borderTop: `1px solid rgba(13,14,133,0.08)` }}
-      className="py-24"
+      className="py-14 md:py-24"
     >
       <div className="container max-w-3xl mx-auto">
 

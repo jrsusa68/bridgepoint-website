@@ -111,7 +111,7 @@ export default function About() {
       <Navbar />
 
       {/* ── 1. Hero Bar ─────────────────────────────────────────────────── */}
-      <section style={{ background: BLUE, padding: "80px 0 56px", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: BLUE, padding: isMobile ? "100px 0 40px" : "80px 0 56px", position: "relative", overflow: "hidden" }}>
         {/* Dot grid texture */}
         <div style={{
           position: "absolute", inset: 0,
@@ -136,7 +136,7 @@ export default function About() {
       </section>
 
       {/* ── 2. The Firm ─────────────────────────────────────────────────── */}
-      <section style={{ background: LIGHT, padding: "96px 0" }}>
+      <section style={{ background: LIGHT, padding: isMobile ? "56px 0" : "96px 0" }}>
         <div
           ref={firmRef.ref}
           style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 2rem" }}
@@ -215,7 +215,7 @@ export default function About() {
       </section>
 
       {/* ── 3. Meet the Founder ─────────────────────────────────────────── */}
-      <section id="founder" style={{ background: BLUE, padding: "96px 0", position: "relative", overflow: "hidden" }}>
+      <section id="founder" style={{ background: BLUE, padding: isMobile ? "56px 0" : "96px 0", position: "relative", overflow: "hidden" }}>
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `radial-gradient(circle, rgba(220,185,43,0.08) 1px, transparent 1px)`,
@@ -335,7 +335,7 @@ export default function About() {
       </section>
 
       {/* ── 5. Core Beliefs ─────────────────────────────────────────────── */}
-      <section style={{ background: BLUE, padding: "96px 0", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: BLUE, padding: isMobile ? "56px 0" : "96px 0", position: "relative", overflow: "hidden" }}>
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `radial-gradient(circle, rgba(220,185,43,0.07) 1px, transparent 1px)`,
@@ -398,7 +398,7 @@ export default function About() {
       </section>
 
       {/* ── 6. What We Stand For — Three Pillars ────────────────────────── */}
-      <section style={{ background: LIGHT, padding: "96px 0" }}>
+      <section style={{ background: LIGHT, padding: isMobile ? "56px 0" : "96px 0" }}>
         <div
           ref={pillarsRef.ref}
           style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 2rem" }}
@@ -482,7 +482,7 @@ export default function About() {
       </section>
 
       {/* ── 7. CTA ──────────────────────────────────────────────────────── */}
-      <section style={{ background: DARK, padding: "96px 0", position: "relative", overflow: "hidden" }}>
+      <section style={{ background: DARK, padding: isMobile ? "56px 0" : "96px 0", position: "relative", overflow: "hidden" }}>
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `radial-gradient(circle, rgba(220,185,43,0.06) 1px, transparent 1px)`,
