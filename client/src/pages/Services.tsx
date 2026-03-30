@@ -1,7 +1,9 @@
 /* ============================================================
    SERVICES PAGE — Bridgepoint Business Collective
    Design: Executive Gravitas | Navy #0d0e85 | Yellow #dcb92b
-   Clean card layout — no overlay system, reliable on all browsers
+   Cards use hover overlay with min-height to ensure overlay
+   has enough room to display correctly on all screen sizes.
+   All CTAs link to https://bridgepointbusinesscollective.com/#contact
    ============================================================ */
 
 import Navbar from "@/components/Navbar";
@@ -15,6 +17,7 @@ const YELLOW  = "#dcb92b";
 const LIGHT   = "#F4F6F9";
 const WHITE   = "#ffffff";
 const DARK    = "#07082a";
+const CTA_URL = "https://bridgepointbusinesscollective.com/#contact";
 
 // ─── SERVICES DATA ────────────────────────────────────────────
 const SERVICES = [
@@ -89,47 +92,330 @@ function useInView(threshold = 0.15) {
   return { ref, inView };
 }
 
-// ─── CTA Button ───────────────────────────────────────────────
-function CtaButton({ label = "Get Started →", dark = false }: { label?: string; dark?: boolean }) {
+// ─── Service Card with hover overlay ─────────────────────────
+function ServiceCard({ service, delay, visible }: {
+  service: typeof SERVICES[0];
+  delay: number;
+  visible: boolean;
+}) {
   const [hovered, setHovered] = useState(false);
-  const bg = dark
-    ? (hovered ? YELLOW : WHITE)
-    : (hovered ? YELLOW : BLUE);
-  const color = dark
-    ? (hovered ? BLUE : BLUE)
-    : (hovered ? BLUE : WHITE);
-  const border = dark
-    ? (hovered ? YELLOW : WHITE)
-    : (hovered ? YELLOW : BLUE);
+
+  const handleCtaClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.location.href = CTA_URL;
+  };
 
   return (
-    <a
-      href="/#contact"
-      onClick={(e) => { e.preventDefault(); window.location.href = "/#contact"; }}
+    <div
+      className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+      style={{
+        transitionDelay: `${delay}ms`,
+        position: "relative",
+        background: WHITE,
+        border: `1px solid rgba(13,14,133,0.1)`,
+        borderLeft: `5px solid ${YELLOW}`,
+        borderRadius: "8px",
+        boxShadow: "0 2px 24px rgba(13,14,133,0.07)",
+        overflow: "hidden",
+        minHeight: "320px",
+      }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+    >
+      {/* ── Default card body ── */}
+      <div
+        style={{
+          padding: "2.5rem 3rem",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "3rem",
+          alignItems: "start",
+          transition: "opacity 0.3s ease",
+          opacity: hovered ? 0 : 1,
+        }}
+      >
+        {/* Left: title, description, quote */}
+        <div>
+          <span style={{
+            fontFamily: "'DM Mono', monospace",
+            fontSize: "0.68rem",
+            fontWeight: 700,
+            letterSpacing: "0.15em",
+            color: YELLOW,
+            background: "rgba(220,185,43,0.1)",
+            padding: "4px 10px",
+            borderRadius: "2px",
+            display: "inline-block",
+            marginBottom: "1rem",
+          }}>
+            {service.num}
+          </span>
+          <h3 style={{
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
+            fontWeight: 700,
+            color: BLUE,
+            marginBottom: "0.4rem",
+            lineHeight: 1.2,
+          }}>
+            {service.title}
+          </h3>
+          <p style={{
+            fontFamily: "'DM Mono', monospace",
+            fontSize: "0.68rem",
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            color: YELLOW,
+            marginBottom: "1.25rem",
+          }}>
+            {service.subtitle}
+          </p>
+          <p style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "1rem",
+            color: "#374151",
+            lineHeight: 1.8,
+            marginBottom: "1.5rem",
+          }}>
+            {service.description}
+          </p>
+          <blockquote style={{
+            borderLeft: `3px solid ${YELLOW}`,
+            paddingLeft: "1rem",
+            margin: 0,
+            fontFamily: "'Playfair Display', serif",
+            fontSize: "0.95rem",
+            fontStyle: "italic",
+            color: BLUE,
+            lineHeight: 1.65,
+          }}>
+            "{service.highlight}"
+          </blockquote>
+        </div>
+
+        {/* Right: what's included + CTA */}
+        <div>
+          <p style={{
+            fontFamily: "'DM Mono', monospace",
+            fontSize: "0.65rem",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: "rgba(13,14,133,0.4)",
+            marginBottom: "1rem",
+          }}>
+            What's Included
+          </p>
+          <ul style={{ listStyle: "none", padding: 0, margin: "0 0 2rem 0", display: "flex", flexDirection: "column", gap: "10px" }}>
+            {service.details.map((item) => (
+              <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+                <span style={{ flexShrink: 0, width: "6px", height: "6px", borderRadius: "50%", background: YELLOW, marginTop: "8px" }} />
+                <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", fontWeight: 500, color: "#1F2937", lineHeight: 1.6 }}>
+                  {item}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <a
+            href={CTA_URL}
+            onClick={handleCtaClick}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              width: "fit-content",
+              fontFamily: "'DM Sans', sans-serif",
+              fontSize: "11px",
+              fontWeight: 700,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              padding: "13px 32px",
+              background: BLUE,
+              color: WHITE,
+              textDecoration: "none",
+              borderRadius: "2px",
+              border: `2px solid ${BLUE}`,
+              whiteSpace: "nowrap",
+              cursor: "pointer",
+            }}
+          >
+            Get Started →
+          </a>
+        </div>
+      </div>
+
+      {/* ── Hover overlay — slides up from bottom ── */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: BLUE,
+          transform: hovered ? "translateY(0)" : "translateY(100%)",
+          transition: "transform 0.42s cubic-bezier(0.4, 0, 0.2, 1)",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          padding: "2.5rem 3rem",
+          zIndex: 2,
+          borderTop: `3px solid ${YELLOW}`,
+        }}
+      >
+        <span style={{
+          fontFamily: "'DM Mono', monospace",
+          fontSize: "0.65rem",
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          color: YELLOW,
+          marginBottom: "0.6rem",
+          display: "block",
+        }}>
+          {service.num} — {service.subtitle}
+        </span>
+        <div style={{ width: "36px", height: "2px", background: YELLOW, marginBottom: "1.25rem" }} />
+        <h3 style={{
+          fontFamily: "'Playfair Display', serif",
+          fontSize: "1.5rem",
+          fontWeight: 700,
+          color: WHITE,
+          lineHeight: 1.3,
+          marginBottom: "1rem",
+        }}>
+          {service.title}
+        </h3>
+        <p style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: "0.95rem",
+          color: "rgba(255,255,255,0.85)",
+          lineHeight: 1.75,
+          marginBottom: "1.5rem",
+        }}>
+          {service.description}
+        </p>
+        <ul style={{ listStyle: "none", padding: 0, margin: "0 0 2rem 0", display: "flex", flexDirection: "column", gap: "8px" }}>
+          {service.details.map((item) => (
+            <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+              <span style={{ color: YELLOW, fontSize: "0.65rem", marginTop: "5px", flexShrink: 0 }}>◆</span>
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", fontWeight: 500, color: "rgba(255,255,255,0.9)", lineHeight: 1.6 }}>
+                {item}
+              </span>
+            </li>
+          ))}
+        </ul>
+        <a
+          href={CTA_URL}
+          onClick={handleCtaClick}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            width: "fit-content",
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: "11px",
+            fontWeight: 700,
+            letterSpacing: "0.14em",
+            textTransform: "uppercase",
+            padding: "12px 28px",
+            background: YELLOW,
+            color: BLUE,
+            textDecoration: "none",
+            borderRadius: "2px",
+            border: `2px solid ${YELLOW}`,
+            whiteSpace: "nowrap",
+            cursor: "pointer",
+          }}
+        >
+          Get Started →
+        </a>
+      </div>
+    </div>
+  );
+}
+
+// ─── Mobile Service Card (no overlay — touch-friendly) ────────
+function ServiceCardMobile({ service, delay, visible }: {
+  service: typeof SERVICES[0];
+  delay: number;
+  visible: boolean;
+}) {
+  const handleCtaClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.location.href = CTA_URL;
+  };
+
+  return (
+    <div
+      className={`transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
       style={{
-        display: "inline-flex",
-        alignItems: "center",
-        width: "fit-content",
-        fontFamily: "'DM Sans', sans-serif",
-        fontSize: "11px",
-        fontWeight: 700,
-        letterSpacing: "0.14em",
-        textTransform: "uppercase",
-        padding: "13px 32px",
-        background: bg,
-        color: color,
-        textDecoration: "none",
-        borderRadius: "2px",
-        border: `2px solid ${border}`,
-        transition: "background 0.2s, color 0.2s, border-color 0.2s",
-        cursor: "pointer",
-        whiteSpace: "nowrap",
+        transitionDelay: `${delay}ms`,
+        background: WHITE,
+        border: `1px solid rgba(13,14,133,0.1)`,
+        borderLeft: `5px solid ${YELLOW}`,
+        borderRadius: "8px",
+        boxShadow: "0 2px 20px rgba(13,14,133,0.07)",
+        padding: "2rem 1.5rem",
       }}
     >
-      {label}
-    </a>
+      <span style={{
+        fontFamily: "'DM Mono', monospace",
+        fontSize: "0.68rem",
+        fontWeight: 700,
+        letterSpacing: "0.15em",
+        color: YELLOW,
+        background: "rgba(220,185,43,0.1)",
+        padding: "4px 10px",
+        borderRadius: "2px",
+        display: "inline-block",
+        marginBottom: "1rem",
+      }}>
+        {service.num}
+      </span>
+      <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.5rem", fontWeight: 700, color: BLUE, marginBottom: "0.4rem", lineHeight: 1.2 }}>
+        {service.title}
+      </h3>
+      <p style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.68rem", letterSpacing: "0.14em", textTransform: "uppercase", color: YELLOW, marginBottom: "1.25rem" }}>
+        {service.subtitle}
+      </p>
+      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1rem", color: "#374151", lineHeight: 1.8, marginBottom: "1.5rem" }}>
+        {service.description}
+      </p>
+      <p style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(13,14,133,0.4)", marginBottom: "0.75rem" }}>
+        What's Included
+      </p>
+      <ul style={{ listStyle: "none", padding: 0, margin: "0 0 1.5rem 0", display: "flex", flexDirection: "column", gap: "10px" }}>
+        {service.details.map((item) => (
+          <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+            <span style={{ flexShrink: 0, width: "6px", height: "6px", borderRadius: "50%", background: YELLOW, marginTop: "8px" }} />
+            <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", fontWeight: 500, color: "#1F2937", lineHeight: 1.6 }}>
+              {item}
+            </span>
+          </li>
+        ))}
+      </ul>
+      <blockquote style={{ borderLeft: `3px solid ${YELLOW}`, paddingLeft: "1rem", margin: "0 0 1.5rem 0", fontFamily: "'Playfair Display', serif", fontSize: "0.9rem", fontStyle: "italic", color: BLUE, lineHeight: 1.65 }}>
+        "{service.highlight}"
+      </blockquote>
+      <a
+        href={CTA_URL}
+        onClick={handleCtaClick}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          width: "fit-content",
+          fontFamily: "'DM Sans', sans-serif",
+          fontSize: "11px",
+          fontWeight: 700,
+          letterSpacing: "0.14em",
+          textTransform: "uppercase",
+          padding: "13px 32px",
+          background: BLUE,
+          color: WHITE,
+          textDecoration: "none",
+          borderRadius: "2px",
+          border: `2px solid ${BLUE}`,
+          whiteSpace: "nowrap",
+          cursor: "pointer",
+        }}
+      >
+        Get Started →
+      </a>
+    </div>
   );
 }
 
@@ -156,22 +442,12 @@ export default function Services() {
           overflow: "hidden",
         }}
       >
-        <div style={{
-          position: "absolute", inset: 0,
-          backgroundImage: `radial-gradient(circle, rgba(220,185,43,0.08) 1px, transparent 1px)`,
-          backgroundSize: "28px 28px",
-        }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: `radial-gradient(circle, rgba(220,185,43,0.08) 1px, transparent 1px)`, backgroundSize: "28px 28px" }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "3px", background: YELLOW }} />
-
-        <div
-          ref={heroRef.ref}
-          style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 2rem", position: "relative" }}
-        >
+        <div ref={heroRef.ref} style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 1.25rem" : "0 2rem", position: "relative" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "1.5rem" }}>
             <div style={{ width: "48px", height: "1px", background: YELLOW }} />
-            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: YELLOW }}>
-              What We Do
-            </span>
+            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: YELLOW }}>What We Do</span>
           </div>
           <h1
             className={`transition-all duration-700 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
@@ -182,7 +458,7 @@ export default function Services() {
           </h1>
           <p
             className={`transition-all duration-700 delay-100 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-            style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(1rem, 1.5vw, 1.2rem)", fontWeight: 400, color: "rgba(255,255,255,0.82)", maxWidth: "600px", lineHeight: 1.75 }}
+            style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(1rem, 1.5vw, 1.2rem)", color: "rgba(255,255,255,0.82)", maxWidth: "600px", lineHeight: 1.75 }}
           >
             Bridgepoint Business Collective supports new and established small and midsize businesses across the United States through three core advisory services — each designed to build, grow, and scale your business with clarity and confidence.
           </p>
@@ -191,17 +467,12 @@ export default function Services() {
 
       {/* ── Three Service Cards ───────────────────────────────── */}
       <section style={{ background: LIGHT, padding: isMobile ? "56px 0" : "96px 0" }}>
-        <div
-          ref={cardsRef.ref}
-          style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 1.25rem" : "0 2rem" }}
-        >
+        <div ref={cardsRef.ref} style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 1.25rem" : "0 2rem" }}>
           {/* Section header */}
           <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", marginBottom: "1.25rem" }}>
               <div style={{ width: "40px", height: "1px", background: YELLOW }} />
-              <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: YELLOW }}>
-                Our Services
-              </span>
+              <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: YELLOW }}>Our Services</span>
               <div style={{ width: "40px", height: "1px", background: YELLOW }} />
             </div>
             <h2
@@ -210,168 +481,32 @@ export default function Services() {
             >
               Three Pillars. One Clear Path Forward.
             </h2>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.05rem", fontWeight: 400, color: "#4B5563", maxWidth: "580px", margin: "0 auto", lineHeight: 1.75 }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.05rem", color: "#4B5563", maxWidth: "580px", margin: "0 auto", lineHeight: 1.75 }}>
               Every service we offer is built around the insights that separate businesses that scale from those that stall.
             </p>
           </div>
 
-          {/* Cards */}
+          {/* Cards — desktop uses hover overlay, mobile uses flat layout */}
           <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-            {SERVICES.map((service, i) => (
-              <div
-                key={service.num}
-                className={`transition-all duration-700 ${cardsRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                style={{
-                  transitionDelay: `${i * 120}ms`,
-                  background: WHITE,
-                  border: `1px solid rgba(13,14,133,0.1)`,
-                  borderLeft: `5px solid ${YELLOW}`,
-                  borderRadius: "8px",
-                  boxShadow: "0 2px 20px rgba(13,14,133,0.07)",
-                  overflow: "visible",
-                }}
-              >
-                <div
-                  style={{
-                    padding: isMobile ? "2rem 1.5rem" : "2.5rem 3rem",
-                    display: "grid",
-                    gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
-                    gap: isMobile ? "2rem" : "3rem",
-                    alignItems: "start",
-                  }}
-                >
-                  {/* ── Left column: title, description, quote ── */}
-                  <div>
-                    {/* Service number badge */}
-                    <div style={{ marginBottom: "1rem" }}>
-                      <span style={{
-                        fontFamily: "'DM Mono', monospace",
-                        fontSize: "0.68rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.15em",
-                        color: YELLOW,
-                        background: "rgba(220,185,43,0.1)",
-                        padding: "4px 10px",
-                        borderRadius: "2px",
-                      }}>
-                        {service.num}
-                      </span>
-                    </div>
-
-                    {/* Title */}
-                    <h3 style={{
-                      fontFamily: "'Playfair Display', serif",
-                      fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
-                      fontWeight: 700,
-                      color: BLUE,
-                      marginBottom: "0.5rem",
-                      lineHeight: 1.2,
-                    }}>
-                      {service.title}
-                    </h3>
-
-                    {/* Subtitle */}
-                    <p style={{
-                      fontFamily: "'DM Mono', monospace",
-                      fontSize: "0.68rem",
-                      letterSpacing: "0.14em",
-                      textTransform: "uppercase",
-                      color: YELLOW,
-                      marginBottom: "1.25rem",
-                    }}>
-                      {service.subtitle}
-                    </p>
-
-                    {/* Description */}
-                    <p style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "1rem",
-                      fontWeight: 400,
-                      color: "#374151",
-                      lineHeight: 1.8,
-                      marginBottom: "1.5rem",
-                    }}>
-                      {service.description}
-                    </p>
-
-                    {/* Insight quote */}
-                    <blockquote style={{
-                      borderLeft: `3px solid ${YELLOW}`,
-                      paddingLeft: "1rem",
-                      margin: 0,
-                      fontFamily: "'Playfair Display', serif",
-                      fontSize: "0.95rem",
-                      fontStyle: "italic",
-                      color: BLUE,
-                      lineHeight: 1.65,
-                    }}>
-                      "{service.highlight}"
-                    </blockquote>
-                  </div>
-
-                  {/* ── Right column: what's included + CTA ── */}
-                  <div>
-                    <p style={{
-                      fontFamily: "'DM Mono', monospace",
-                      fontSize: "0.65rem",
-                      letterSpacing: "0.2em",
-                      textTransform: "uppercase",
-                      color: "rgba(13,14,133,0.4)",
-                      marginBottom: "1rem",
-                    }}>
-                      What's Included
-                    </p>
-
-                    <ul style={{ listStyle: "none", padding: 0, margin: "0 0 2rem 0", display: "flex", flexDirection: "column", gap: "10px" }}>
-                      {service.details.map((item) => (
-                        <li key={item} style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
-                          <span style={{
-                            flexShrink: 0,
-                            width: "6px",
-                            height: "6px",
-                            borderRadius: "50%",
-                            background: YELLOW,
-                            marginTop: "8px",
-                          }} />
-                          <span style={{
-                            fontFamily: "'DM Sans', sans-serif",
-                            fontSize: "0.95rem",
-                            fontWeight: 500,
-                            color: "#1F2937",
-                            lineHeight: 1.6,
-                          }}>
-                            {item}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <CtaButton />
-                  </div>
-                </div>
-              </div>
-            ))}
+            {SERVICES.map((service, i) =>
+              isMobile ? (
+                <ServiceCardMobile key={service.num} service={service} delay={i * 120} visible={cardsRef.inView} />
+              ) : (
+                <ServiceCard key={service.num} service={service} delay={i * 120} visible={cardsRef.inView} />
+              )
+            )}
           </div>
         </div>
       </section>
 
       {/* ── How It Works — Process Steps ─────────────────────── */}
       <section style={{ background: BLUE, padding: isMobile ? "56px 0" : "96px 0", position: "relative", overflow: "hidden" }}>
-        <div style={{
-          position: "absolute", inset: 0,
-          backgroundImage: `radial-gradient(circle, rgba(220,185,43,0.07) 1px, transparent 1px)`,
-          backgroundSize: "24px 24px",
-        }} />
-        <div
-          ref={processRef.ref}
-          style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 1.25rem" : "0 2rem", position: "relative" }}
-        >
+        <div style={{ position: "absolute", inset: 0, backgroundImage: `radial-gradient(circle, rgba(220,185,43,0.07) 1px, transparent 1px)`, backgroundSize: "24px 24px" }} />
+        <div ref={processRef.ref} style={{ maxWidth: "1280px", margin: "0 auto", padding: isMobile ? "0 1.25rem" : "0 2rem", position: "relative" }}>
           <div style={{ textAlign: "center", marginBottom: "4rem" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", marginBottom: "1.25rem" }}>
               <div style={{ width: "40px", height: "1px", background: YELLOW }} />
-              <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: YELLOW }}>
-                How It Works
-              </span>
+              <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: YELLOW }}>How It Works</span>
               <div style={{ width: "40px", height: "1px", background: YELLOW }} />
             </div>
             <h2
@@ -381,12 +516,7 @@ export default function Services() {
               Our Four-Step Advisory Process
             </h2>
           </div>
-
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)",
-            gap: "1.5rem",
-          }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)", gap: "1.5rem" }}>
             {PROCESS_STEPS.map((step, i) => (
               <div
                 key={step.num}
@@ -402,20 +532,7 @@ export default function Services() {
                   alignItems: "flex-start",
                 }}
               >
-                <div style={{
-                  flexShrink: 0,
-                  width: "44px",
-                  height: "44px",
-                  borderRadius: "50%",
-                  background: YELLOW,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontFamily: "'DM Mono', monospace",
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  color: BLUE,
-                }}>
+                <div style={{ flexShrink: 0, width: "44px", height: "44px", borderRadius: "50%", background: YELLOW, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'DM Mono', monospace", fontSize: "0.75rem", fontWeight: 700, color: BLUE }}>
                   {step.num}
                 </div>
                 <div>
@@ -434,20 +551,11 @@ export default function Services() {
 
       {/* ── CTA Section ───────────────────────────────────────── */}
       <section style={{ background: DARK, padding: isMobile ? "56px 0" : "96px 0", position: "relative", overflow: "hidden" }}>
-        <div style={{
-          position: "absolute", inset: 0,
-          backgroundImage: `radial-gradient(circle, rgba(220,185,43,0.06) 1px, transparent 1px)`,
-          backgroundSize: "28px 28px",
-        }} />
-        <div
-          ref={ctaRef.ref}
-          style={{ maxWidth: "720px", margin: "0 auto", padding: isMobile ? "0 1.25rem" : "0 2rem", position: "relative", textAlign: "center" }}
-        >
+        <div style={{ position: "absolute", inset: 0, backgroundImage: `radial-gradient(circle, rgba(220,185,43,0.06) 1px, transparent 1px)`, backgroundSize: "28px 28px" }} />
+        <div ref={ctaRef.ref} style={{ maxWidth: "720px", margin: "0 auto", padding: isMobile ? "0 1.25rem" : "0 2rem", position: "relative", textAlign: "center" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", marginBottom: "1.25rem" }}>
             <div style={{ width: "40px", height: "1px", background: YELLOW }} />
-            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: YELLOW }}>
-              Ready to Begin
-            </span>
+            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: "0.7rem", letterSpacing: "0.25em", textTransform: "uppercase", color: YELLOW }}>Ready to Begin</span>
             <div style={{ width: "40px", height: "1px", background: YELLOW }} />
           </div>
           <h2
@@ -463,7 +571,29 @@ export default function Services() {
             Schedule a complimentary consultation and let us build your strategic roadmap — from financial infrastructure to growth positioning.
           </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <CtaButton label="Schedule a Consultation →" dark={true} />
+            <a
+              href={CTA_URL}
+              onClick={(e) => { e.preventDefault(); window.location.href = CTA_URL; }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                fontFamily: "'DM Sans', sans-serif",
+                fontSize: "11px",
+                fontWeight: 700,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                padding: "14px 36px",
+                background: YELLOW,
+                color: BLUE,
+                textDecoration: "none",
+                borderRadius: "2px",
+                border: `2px solid ${YELLOW}`,
+                whiteSpace: "nowrap",
+                cursor: "pointer",
+              }}
+            >
+              Schedule a Consultation →
+            </a>
           </div>
         </div>
       </section>

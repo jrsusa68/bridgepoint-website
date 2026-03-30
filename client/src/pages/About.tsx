@@ -516,8 +516,12 @@ export default function About() {
             className={`transition-all duration-700 delay-200 ${ctaRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
             style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}
           >
-            <Link href="/#contact">
-              <button style={{
+            <a
+              href="https://bridgepointbusinesscollective.com/#contact"
+              onClick={(e) => { e.preventDefault(); window.location.href = "https://bridgepointbusinesscollective.com/#contact"; }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
                 background: YELLOW,
                 color: BLUE,
                 border: "none",
@@ -530,13 +534,13 @@ export default function About() {
                 borderRadius: "4px",
                 cursor: "pointer",
                 transition: "all 0.2s",
+                textDecoration: "none",
               }}
-                onMouseEnter={(e) => { (e.target as HTMLElement).style.background = "#e8c84a"; (e.target as HTMLElement).style.transform = "translateY(-2px)"; }}
-                onMouseLeave={(e) => { (e.target as HTMLElement).style.background = YELLOW; (e.target as HTMLElement).style.transform = "translateY(0)"; }}
-              >
-                Get Started
-              </button>
-            </Link>
+              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "#e8c84a"; (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-2px)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = YELLOW; (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)"; }}
+            >
+              Get Started
+            </a>
             <Link href="/">
               <button style={{
                 background: "transparent",

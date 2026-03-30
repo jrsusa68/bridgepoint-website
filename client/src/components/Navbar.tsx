@@ -43,11 +43,11 @@ const NAV_DATA = {
         { label: "Meet the Founder",  href: "/about#founder" },
       ],
     },
-    { label: "Contact Us", href: "/#contact" },
+    { label: "Contact Us", href: "https://bridgepointbusinesscollective.com/#contact" },
   ],
 
   ctaButtons: [
-    { label: "Get Started", href: "/#contact", variant: "primary" as const },
+    { label: "Get Started", href: "https://bridgepointbusinesscollective.com/#contact", variant: "primary" as const },
   ],
 };
 // ─── END DATA SECTION ─────────────────────────────────────────

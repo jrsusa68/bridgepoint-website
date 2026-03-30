@@ -34,7 +34,7 @@ const FOOTER_DATA = {
     { label: "Home",       href: "/" },
     { label: "Services",   href: "/services" },
     { label: "About Us",   href: "/about" },
-    { label: "Contact Us", href: "/#contact" },
+    { label: "Contact Us", href: "https://bridgepointbusinesscollective.com/#contact" },
   ],
 
   legal: [

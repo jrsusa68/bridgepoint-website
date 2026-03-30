@@ -213,21 +213,25 @@ export default function Home() {
             <div
               className={`flex flex-col sm:flex-row flex-wrap gap-4 transition-all duration-700 delay-300 ${heroRef.inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
             >
-              <button
-                onClick={() => scrollToSection("contact")}
+              <a
+                href="https://bridgepointbusinesscollective.com/#contact"
+                onClick={(e) => { e.preventDefault(); window.location.href = "https://bridgepointbusinesscollective.com/#contact"; }}
                 className="group flex items-center gap-2 px-8 py-4 font-semibold text-sm tracking-widest uppercase transition-all duration-200"
                 style={{
                   background: YELLOW,
                   color: BLUE,
                   fontFamily: "'DM Sans', sans-serif",
                   letterSpacing: "0.1em",
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
                 }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = YELLOW_LIGHT; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = YELLOW; }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = YELLOW_LIGHT; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = YELLOW; }}
               >
                 Get Started
                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </button>
+              </a>
               <button
                 onClick={() => scrollToSection("services")}
                 className="flex items-center gap-2 px-8 py-4 font-semibold text-sm tracking-widest uppercase transition-all duration-200"
